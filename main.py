@@ -10,7 +10,8 @@ from process_music.files_manager import find_audio_files, copy_audio_files, has_
 from workflow.state import State
 from config import SOURCE_FOLDER, ARTIST_DB_FILE
 
-EXAMPLES = 10
+# Default number of examples
+DEFAULT_EXAMPLES = 10
 
 class ProcessingStats:
     def __init__(self):
@@ -69,6 +70,20 @@ def load_artist_database():
             return json.load(file)
     return []
 
+def get_number_of_examples():
+    while True:
+        try:
+            num = input(f"\n🔢 Enter the number of examples to show (default: {DEFAULT_EXAMPLES}): ").strip()
+            if not num:
+                return DEFAULT_EXAMPLES
+            num = int(num)
+            if num < 1:
+                print("❌ Number of examples must be at least 1.")
+                continue
+            return num
+        except ValueError:
+            print("❌ Please enter a valid number.")
+
 if __name__ == "__main__":
     # Get the parent directory of the current working directory
     parent_dir = os.path.dirname(os.getcwd())
@@ -91,6 +106,9 @@ if __name__ == "__main__":
             print(f"❌ Error creating destination folder: {str(e)}")
             print("Please try again with a valid folder name.")
 
+    # Get number of examples
+    num_examples = get_number_of_examples()
+
     stats = ProcessingStats()
     artist_database = load_artist_database()
     workflow = create_workflow()
@@ -105,9 +123,9 @@ if __name__ == "__main__":
 
     print(f"🎶 Found {stats.total_files} audio files.\n")
 
-    # 🔎 Show 5 examples using the agent
-    print(f"🔎 Running agent on {EXAMPLES} examples:\n")
-    samples = random.sample(audio_files, min(EXAMPLES, stats.total_files))
+    # 🔎 Show examples using the agent
+    print(f"🔎 Running agent on {num_examples} examples:\n")
+    samples = random.sample(audio_files, min(num_examples, stats.total_files))
     for file_path in samples:
         extension = os.path.splitext(file_path)[1].lower()
         example_state: State = {

@@ -15,16 +15,22 @@ A Python-based music file organization tool that uses AI to process and organize
 
 - Python 3.8 or higher
 - pip (Python package installer)
+- Git
 
 ## Installation
 
-1. Clone the repository:
+1. Navigate to your SoulSeek download folder (where the "complete" folder is located):
+```bash
+cd /path/to/SoulSeek/download/folder
+```
+
+2. Clone the repository:
 ```bash
 git clone git@github.com:cisternas/soulseek-agent.git
 cd soulseek-agent
 ```
 
-2. Create and activate a virtual environment (recommended):
+3. Create and activate a virtual environment (recommended):
 ```bash
 python -m venv env
 # On Windows
@@ -33,7 +39,7 @@ env\Scripts\activate
 source env/bin/activate
 ```
 
-3. Install dependencies:
+4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
@@ -67,7 +73,9 @@ soulseek-agent/
 python main.py
 ```
 
-3. When prompted, enter the name for the destination folder (it will be created in the parent directory).
+3. When prompted:
+   - Enter the number of examples you want to see (default: 10)
+   - Enter the name for the destination folder (it will be created in the parent directory)
 
 4. The application will:
    - Show examples of how files will be processed
